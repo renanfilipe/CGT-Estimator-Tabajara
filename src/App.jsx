@@ -21,7 +21,9 @@ function App() {
   }
 
   useEffect(() => {
-    window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+    if(!data) {
+      window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+    }
   }, [isLoading])
 
   async function handleClick() {
@@ -30,7 +32,6 @@ function App() {
     setData()
     const response = await axios(`https://api.estimator.cgtr.io/api/v1/estimate?${qs.stringify(params)}`)
     setIsLoading(false)
-    console.log(response)
     setData(response.data)
   }
 

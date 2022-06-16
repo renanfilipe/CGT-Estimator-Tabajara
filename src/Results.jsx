@@ -14,8 +14,14 @@ function Results({ data }) {
     url,
   } = data
 
-  const lastPublishedAt = new Date(last_published_at)
-  const lastSoldAt = new Date(last_sold_at)
+  var options = {
+    year: "numeric",
+    month: "2-digit",
+    day: "numeric"
+  };
+
+  const lastPublishedAt = new Date(last_published_at).toLocaleString("en", options)
+  const lastSoldAt = new Date(last_sold_at).toLocaleString("en", options)
 
   const color = (() => {
     if (model_count > 500) {
