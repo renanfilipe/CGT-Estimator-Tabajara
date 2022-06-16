@@ -1,14 +1,18 @@
 import { useState } from 'react'
+import axios from 'axios'
+import qs from 'qs';
+import logo from './logo.gif'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Chip from '@mui/material/Chip';
+
+import Results from './Results'
 
 const response = {
   "average_price": 10.5,
-  "model_count": 999,
-  "tags":["reptile", "monster", "dinosaur", "lizard", "illustration", "paleontology"],
+  "model_count": 101,
+  "tags": ["reptile", "monster", "dinosaur", "lizard", "illustration", "paleontology"],
   "url": null,
 }
 
@@ -18,75 +22,100 @@ function App() {
     setImageUrl(event.target.value)
   }
 
-  function handleClick() {}
+  function handleClick() {
+    const data = { url: imageUrl, filters: 'meu piru' }
+    axios(`https://63e5-187-18-143-76.sa.ngrok.io/api/v1/estimate?${qs.stringify(data)}`)
+  }
 
   return (
-    <Box padding="20px">
-      <Typography
-        variant="h4"
-        component="div"
-        gutterBottom
-      >
-        CGT Estimator Tabajara
-      </Typography>
+    <Box
+      margin="auto"
+      paddingTop="90px"
+      backgroundColor="black"
+      color="white"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      fontFamily="Courier Prime"
+      fontStyle="normal"
+    >
       <Box
         display="flex"
+        alignItems="center"
+        marginLeft="-55px"
+      >
+        <img src={logo} alt="logo" height="200px" />
+        <Typography
+          variant="h4"
+          component="div"
+          gutterBottom
+          fontWeight="400"
+          fontSize="48px"
+          lineHeight="48px"
+          fontFamily="Courier Prime"
+          fontStyle="normal"
+          marginLeft="-28px"
+          marginTop="20px"
+        >
+          Estimator<br/>Tabajara
+        </Typography>
+      </Box>
+      <Box
+        width="450px"
+        textAlign="center"
+        marginTop="40px"
+      >
+        <Typography
+          variant="body1"
+          component="span"
+          fontWeight="700"
+          fontSize="24px"
+          lineHeight="32px"
+          fontFamily="Courier Prime"
+          fontStyle="normal"
+        >
+          Having trouble deciding what to 3D?
+        </Typography>
+        <Typography
+          variant="body1"
+          component="p"
+          fontWeight="400"
+          fontSize="16px"
+          lineHeight="24px"
+          fontFamily="Courier Prime"
+          fontStyle="normal"
+          marginTop="16px"
+          marginBottom="40px"
+        >
+          Estimate your sales before modeling it. Please provide of an image what you are planning to model and get your sales estimates.
+        </Typography>
+      </Box>
+      <Box
+        display="flex"
+        flexDirection="column"
         gap="32px"
         alignItems="center"
+        width="450px"
+        color="white"
       >
         <TextField
           label="Image url"
           focused
+          variant="filled"
+          color="primary"
           onChange={handleChange}
           value={imageUrl}
           fullWidth
-          width="100%"
+          InputProps={{ style: { color: 'white' } }}
         />
         <Button
           variant="contained"
           onClick={handleClick}
         >
-          Submit
+          Start estimating
         </Button>
       </Box>
-      <Box
-        display="flex"
-        flexDirection="column"
-        marginTop="32px"
-      >
-        <Typography
-          variant="h6"
-          component="span"
-          gutterBottom
-        >
-          Results:
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          component="span"
-          gutterBottom
-          flexDirection="row"
-          display="flex"
-          alignItems="center"
-          gap="8px"
-        >
-          Tags Found: {response.tags.map(item => <Chip key={item} label={item} />)}
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          component="span"
-          gutterBottom
-        >
-          Average price: {response.average_price}
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          component="span"
-          gutterBottom
-        >
-          Model count: {response.model_count}
-        </Typography>
-      </Box>
+      <Results data={response} />
     </Box>
   );
 }
