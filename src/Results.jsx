@@ -1,11 +1,5 @@
-import { useState } from 'react'
-import axios from 'axios'
-import qs from 'qs';
-import logo from './logo.gif'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 
 function Results({ data }) {

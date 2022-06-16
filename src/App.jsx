@@ -9,22 +9,22 @@ import Button from '@mui/material/Button';
 
 import Results from './Results'
 
-const response = {
-  "average_price": 10.5,
-  "model_count": 101,
-  "tags": ["reptile", "monster", "dinosaur", "lizard", "illustration", "paleontology"],
-  "url": null,
-}
-
 function App() {
   const [imageUrl, setImageUrl] = useState('')
+  const [data, setData] = useState()
+  const [isLoading, setIsLoading] = useState(false)
+
   function handleChange(event) {
     setImageUrl(event.target.value)
   }
 
-  function handleClick() {
-    const data = { url: imageUrl, filters: 'meu piru' }
-    axios(`https://63e5-187-18-143-76.sa.ngrok.io/api/v1/estimate?${qs.stringify(data)}`)
+  async function handleClick() {
+    const params = { url: imageUrl }
+    setIsLoading(true)
+    const response = await axios(`https://63e5-187-18-143-76.sa.ngrok.io/api/v1/estimate?${qs.stringify(params)}`)
+    setIsLoading(false)
+    setData(response)
+    console.log({ response })
   }
 
   return (
@@ -111,11 +111,14 @@ function App() {
         <Button
           variant="contained"
           onClick={handleClick}
+          disabled={isLoading}
         >
           Start estimating
         </Button>
       </Box>
-      <Results data={response} />
+      {data && (
+        <Results data={data} />
+      )}
     </Box>
   );
 }
