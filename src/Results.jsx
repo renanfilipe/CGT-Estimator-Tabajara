@@ -84,6 +84,7 @@ function Results({ data }) {
           marginTop="32px"
           marginBottom="40px"
           justifyContent="space-between"
+          gap="64px"
         >
           <Box
             display="flex"
@@ -113,7 +114,7 @@ function Results({ data }) {
               lineHeight="72px"
               color="#41B7B7"
             >
-              ${averagePrice}
+              ${Number(averagePrice).toFixed(2)}
             </Typography>
           </Box>
           <Box
