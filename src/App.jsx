@@ -2,12 +2,14 @@ import { useState } from 'react'
 import axios from 'axios'
 import qs from 'qs';
 import logo from './logo.gif'
+import loading from './loading.gif'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 import Results from './Results'
+import { useEffect } from 'react';
 
 function App() {
   const [imageUrl, setImageUrl] = useState('')
@@ -18,12 +20,17 @@ function App() {
     setImageUrl(event.target.value)
   }
 
+  useEffect(() => {
+    window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+  }, [isLoading])
+
   async function handleClick() {
     const params = { url: imageUrl }
     setIsLoading(true)
     setData()
-    const response = await axios(`https://63e5-187-18-143-76.sa.ngrok.io/api/v1/estimate?${qs.stringify(params)}`)
+    const response = await axios(`https://api.estimator.cgtr.io/api/v1/estimate?${qs.stringify(params)}`)
     setIsLoading(false)
+    console.log(response)
     setData(response.data)
   }
 
@@ -61,7 +68,7 @@ function App() {
         </Typography>
       </Box>
       <Box
-        width="450px"
+        width="550px"
         textAlign="center"
         marginTop="40px"
       >
@@ -95,7 +102,7 @@ function App() {
         flexDirection="column"
         gap="32px"
         alignItems="center"
-        width="450px"
+        width="550px"
         color="white"
       >
         <TextField
@@ -115,6 +122,36 @@ function App() {
         >
           Start estimating
         </Button>
+        {isLoading && (
+          <div id="loading" style={{ textAlign: 'center'}}>
+            <img src={loading} alt="loader" height="512px" width="512px"/>
+            <Typography
+              variant="subtitle1"
+              component="span"
+              gutterBottom
+              fontFamily="Courier Prime"
+              fontStyle="normal"
+              fontWeight="400"
+              fontSize="24px"
+              lineHeight="32px"
+            >
+              Estimating…
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              component="p"
+              gutterBottom
+              fontFamily="Courier Prime"
+              fontStyle="normal"
+              fontWeight="400"
+              fontSize="24px"
+              lineHeight="32px"
+              marginBottom="40px"
+            >
+              Meanwhile, did you know that dead skin cells are the main ingredient in household dust?
+            </Typography>
+          </div>
+        )}
       </Box>
       {data && (
         <Results data={data} />

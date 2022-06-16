@@ -1,21 +1,28 @@
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Chip from '@mui/material/Chip'
 
 function Results({ data }) {
   const {
+    sold_count,
+    average_price,
+    last_sold_at,
+    designer_count,
+    model_count,
+    last_published_at,
     tags,
-    average_price: averagePrice,
-    model_count: modelCount,
     url,
   } = data
 
+  const lastPublishedAt = new Date(last_published_at)
+  const lastSoldAt = new Date(last_sold_at)
+
   const color = (() => {
-    if (modelCount > 500) {
+    if (model_count > 500) {
       return 'red'
     }
 
-    if (modelCount > 100) {
+    if (model_count > 100) {
       return '#F9E14B'
     }
 
@@ -23,17 +30,16 @@ function Results({ data }) {
   })()
 
   const text = (() => {
-    if (modelCount > 500) {
+    if (model_count > 500) {
       return 'High'
     }
 
-    if (modelCount > 100) {
+    if (model_count > 100) {
       return 'Medium'
     }
 
     return 'Low'
   })()
-
 
   return (
     <Box
@@ -48,10 +54,11 @@ function Results({ data }) {
         component="span"
         gutterBottom
         marginBottom="50px"
+        fontFamily="Courier Prime"
       >
         Estimation results:
       </Typography>
-      <img src={url} alt="result" />
+      <img src={url} alt="result" height="300px" />
       <Box
         display="flex"
         flexDirection="column"
@@ -64,7 +71,7 @@ function Results({ data }) {
           display="flex"
           alignItems="center"
           marginTop="30px"
-          fontFamily="Lato"
+          fontFamily="Courier Prime"
           fontStyle="normal"
           fontWeight="700"
           fontSize="24px"
@@ -95,7 +102,7 @@ function Results({ data }) {
               variant="subtitle1"
               component="span"
               gutterBottom
-              fontFamily="Lato"
+              fontFamily="Courier Prime"
               fontStyle="normal"
               fontWeight="700"
               fontSize="24px"
@@ -107,14 +114,14 @@ function Results({ data }) {
               variant="subtitle1"
               component="span"
               gutterBottom
-              fontFamily="Montserrat"
+              fontFamily="Courier Prime"
               fontStyle="normal"
               fontWeight="600"
               fontSize="64px"
               lineHeight="72px"
               color="#41B7B7"
             >
-              ${Number(averagePrice).toFixed(2)}
+              ${Number(average_price).toFixed(2)}
             </Typography>
           </Box>
           <Box
@@ -126,7 +133,7 @@ function Results({ data }) {
               variant="subtitle1"
               component="span"
               gutterBottom
-              fontFamily="Lato"
+              fontFamily="Courier Prime"
               fontStyle="normal"
               fontWeight="700"
               fontSize="24px"
@@ -138,7 +145,7 @@ function Results({ data }) {
               variant="subtitle1"
               component="span"
               gutterBottom
-              fontFamily="Montserrat"
+              fontFamily="Courier Prime"
               fontStyle="normal"
               fontWeight="600"
               fontSize="64px"
@@ -148,6 +155,161 @@ function Results({ data }) {
               {text}
             </Typography>
           </Box>
+        </Box>
+      </Box>
+      <Box
+        display="flex"
+        flexDirection="column"
+      >
+        <Box
+          display="flex"
+          flexDirection="column"
+        >
+          <Typography
+            variant="subtitle1"
+            component="span"
+            gutterBottom
+            fontFamily="Courier Prime"
+            fontStyle="normal"
+            fontWeight="700"
+            fontSize="24px"
+            lineHeight="32px"
+          >
+            Designers listing similar models:
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            component="span"
+            gutterBottom
+            fontFamily="Courier Prime"
+            fontStyle="normal"
+            fontWeight="600"
+            fontSize="64px"
+            lineHeight="72px"
+            color="white"
+          >
+            {designer_count}
+          </Typography>
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="column"
+        >
+          <Typography
+            variant="subtitle1"
+            component="span"
+            gutterBottom
+            fontFamily="Courier Prime"
+            fontStyle="normal"
+            fontWeight="700"
+            fontSize="24px"
+            lineHeight="32px"
+          >
+            Similar models listed:
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            component="span"
+            gutterBottom
+            fontFamily="Courier Prime"
+            fontStyle="normal"
+            fontWeight="600"
+            fontSize="64px"
+            lineHeight="72px"
+            color="white"
+          >
+            {model_count}
+          </Typography>
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="column"
+        >
+          <Typography
+            variant="subtitle1"
+            component="span"
+            gutterBottom
+            fontFamily="Courier Prime"
+            fontStyle="normal"
+            fontWeight="700"
+            fontSize="24px"
+            lineHeight="32px"
+          >
+            Similar models sold:
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            component="span"
+            gutterBottom
+            fontFamily="Courier Prime"
+            fontStyle="normal"
+            fontWeight="600"
+            fontSize="64px"
+            lineHeight="72px"
+            color="white"
+          >
+            {sold_count}
+          </Typography>
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="column"
+        >
+          <Typography
+            variant="subtitle1"
+            component="span"
+            gutterBottom
+            fontFamily="Courier Prime"
+            fontStyle="normal"
+            fontWeight="700"
+            fontSize="24px"
+            lineHeight="32px"
+          >
+            Last model sold at:
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            component="span"
+            gutterBottom
+            fontFamily="Courier Prime"
+            fontStyle="normal"
+            fontWeight="600"
+            fontSize="64px"
+            lineHeight="72px"
+            color="white"
+          >
+            {lastSoldAt}
+          </Typography>
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="column"
+        >
+          <Typography
+            variant="subtitle1"
+            component="span"
+            gutterBottom
+            fontFamily="Courier Prime"
+            fontStyle="normal"
+            fontWeight="700"
+            fontSize="24px"
+            lineHeight="32px"
+          >
+            Last model uploaded at:
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            component="span"
+            gutterBottom
+            fontFamily="Courier Prime"
+            fontStyle="normal"
+            fontWeight="600"
+            fontSize="64px"
+            lineHeight="72px"
+            color="white"
+          >
+            {lastPublishedAt}
+          </Typography>
         </Box>
       </Box>
     </Box>
