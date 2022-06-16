@@ -21,10 +21,10 @@ function App() {
   async function handleClick() {
     const params = { url: imageUrl }
     setIsLoading(true)
+    setData()
     const response = await axios(`https://63e5-187-18-143-76.sa.ngrok.io/api/v1/estimate?${qs.stringify(params)}`)
     setIsLoading(false)
-    setData(response)
-    console.log({ response })
+    setData(response.data)
   }
 
   return (
